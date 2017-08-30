@@ -1,2 +1,2 @@
-# terremotocentro_dataset
+# Dataset
 Invio e/o richiesta dati progetto terremotocentroitalia.
