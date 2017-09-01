@@ -9,7 +9,7 @@ class elements
     public $email;
     public $text;
     public $url;
-    public $label = "Segnalo un dataset";
+    public $label = ["Segnalo un dataset"];
     public $list = [];
 
     function __construct()
@@ -18,6 +18,7 @@ class elements
         $this->name = htmlspecialchars(trim($_POST["name"]));
         $this->email = htmlspecialchars(trim($_POST["email"]));
         $this->text = htmlspecialchars(trim($_POST["text"]));
+        $this->label[1] = htmlspecialchars(trim($_POST["label"]));
         $this->url = isset($_POST["url"]) ? htmlspecialchars(trim($_POST["url"])) : NULL;
     }
 
@@ -28,7 +29,7 @@ class elements
 
     function check()
     {
-        if (empty($this->what) || empty($this->name) || empty($this->email) || empty($this->text)) {
+        if (empty($this->what) || empty($this->name) || empty($this->email) || empty($this->text|| empty($this->label))) {
             $this->error();
             exit;
         }
@@ -50,7 +51,7 @@ switch ($data->what) {
         $data->list["URL"] = $data->url;
         break;
     case "ask":
-        $data->label = "Cerco un dataset";
+        $data->label[0] = "Cerco un dataset";
         break;
     default:
         $data->error();
@@ -62,7 +63,7 @@ $yaml = Spyc::YAMLDump($data->list);
 $things = array(
     "title" => substr($data->text, 0, 10),
     "body" => "<pre><yamldata>$yaml</yamldata></pre>",
-    "labels" => [$data->label]
+    "labels" => [$data->label[0],$data->label[1]]
 );
 
 $issue = new curl;

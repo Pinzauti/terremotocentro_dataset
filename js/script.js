@@ -1,6 +1,6 @@
 var finish = document.getElementById('success');
 var url = document.getElementById('url');
-var what;
+var what,label;
 
 function show(par) {
     document.getElementById('fields').style.display = 'inline';
@@ -23,6 +23,22 @@ function show(par) {
 function go() {
     var data = new FormData(document.getElementById('form'));
     data.append("what", what);
+    switch (window.location.hash) {
+        case 'emergenza':
+            label = 'emergenza';
+            break;
+
+        case 'ricostruzione':
+            label = 'ricostruzione';
+            break;
+        case 'sviluppo':
+            label = 'ricostruzione';
+            break;
+        case 'finanza':
+            label = 'ricostruzione';
+            break;
+    }
+    data.append("label", label);
     var request = new XMLHttpRequest();
     request.open('POST', 'php/script.php', true);
     request.onload = function () {
