@@ -1,11 +1,11 @@
 var finish = document.getElementById('success');
 var url = document.getElementById('url');
-var what,label;
+var what, label;
 
 function show(par) {
     document.getElementById('fields').style.display = 'inline';
     document.getElementById('choose').style.display = 'none';
-    document.getElementById('subtitle').innerHTML = '<a href="">Torna Indietro</a>';
+    document.getElementById('subtitle').innerHTML = '<a href="javascript:back()">Torna Indietro</a>';
     what = par;
     switch (par) {
         case 'send':
@@ -22,9 +22,8 @@ function show(par) {
 
 function go() {
     var data = new FormData(document.getElementById('form'));
+    label = window.location.hash.replace('#', '');
     data.append("what", what);
-    label = window.location.hash.replace('#','');
-    console.log(label);
     data.append("label", label);
     var request = new XMLHttpRequest();
     request.open('POST', 'php/script.php', true);
@@ -36,6 +35,14 @@ function go() {
         }
     };
     request.send(data);
+}
+
+function back() {
+    document.getElementById('fields').style.display = 'none';
+    document.getElementById('choose').style.display = 'inline';
+    url.style.display = 'inline';
+    url.required = true;
+    document.getElementById('text').setAttribute("placeholder", "Richiesta");
 }
 
 document.getElementById('send').addEventListener('click', function () {

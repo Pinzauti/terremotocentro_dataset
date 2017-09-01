@@ -9,7 +9,7 @@ class elements
     public $email;
     public $text;
     public $url;
-    public $label = ["Segnalo un dataset"];
+    public $label = array("Segnalo un dataset");
     public $list = [];
 
     function __construct()
@@ -29,7 +29,7 @@ class elements
 
     function check()
     {
-        if (empty($this->what) || empty($this->name) || empty($this->email) || empty($this->text|| empty($this->label))) {
+        if (empty($this->what) || empty($this->name) || empty($this->email) || empty($this->text || empty($this->label[1]))) {
             $this->error();
             exit;
         }
@@ -63,9 +63,9 @@ $yaml = Spyc::YAMLDump($data->list);
 $things = array(
     "title" => substr($data->text, 0, 10),
     "body" => "<pre><yamldata>$yaml</yamldata></pre>",
-    "labels" => [$data->label[0],$data->label[1]]
+    "labels" => $data->label
 );
 
 $issue = new curl;
-$issue->createIssue($things, "https://api.github.com/repos/emergenzeHack/terremotocentro_segnalazioni/issues", "INSERISCI USERNAME", "INSERISCI PASSWORD");
+$issue->createIssue($things, "https://api.github.com/repos/emergenzeHack/terremotocentro_segnalazioni/issues", getenv('GITHUB_USERNAME'), getenv('GITHUB_PASSWORD'));
 $issue->isFinished();
