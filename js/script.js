@@ -23,21 +23,8 @@ function show(par) {
 function go() {
     var data = new FormData(document.getElementById('form'));
     data.append("what", what);
-    switch (window.location.hash) {
-        case 'emergenza':
-            label = 'emergenza';
-            break;
-
-        case 'ricostruzione':
-            label = 'ricostruzione';
-            break;
-        case 'sviluppo':
-            label = 'ricostruzione';
-            break;
-        case 'finanza':
-            label = 'ricostruzione';
-            break;
-    }
+    label = window.location.hash.replace('#','');
+    console.log(label);
     data.append("label", label);
     var request = new XMLHttpRequest();
     request.open('POST', 'php/script.php', true);
